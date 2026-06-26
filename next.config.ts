@@ -1,7 +1,9 @@
-import type { NextConfig } from "next";
+// next.config.ts
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  // اجازه‌ی دسترسی به منابع dev از این هاست (چون از روی IP شبکه بازش می‌کنی)
+  allowedDevOrigins: ['10.77.201.72'],
+}
 
-export default nextConfig;
+export default nextConfig
