@@ -5,12 +5,7 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 import { Container } from '@/components/ui/Container'
 
-// لینک‌های اجتماعی — مقادیر را با اکانت‌های واقعی خودت عوض کن.
-const SOCIALS: { href: string; label: string; icon: IconDefinition }[] = [
-  { href: 'https://github.com/your-username', label: 'گیت‌هاب', icon: faGithub },
-  { href: 'https://linkedin.com/in/your-username', label: 'لینکدین', icon: faLinkedinIn },
-  { href: 'mailto:you@example.com', label: 'ایمیل', icon: faEnvelope },
-]
+
 
 export function Footer() {
   // سال جاری به‌صورت خودکار؛ دیگه دستی عوضش نمی‌کنی.
@@ -27,21 +22,35 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
-            {SOCIALS.map(({ href, label, icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 transition-colors
-                           hover:bg-slate-100 hover:text-emerald-600
-                           dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-emerald-400"
-              >
-                <FontAwesomeIcon icon={icon} className="text-[20px]" />
-              </a>
-            ))}
+              <div className="mt-8 flex items-center justify-center gap-3">
+            <a
+              href="https://github.com/negarShahhaha"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="گیت‌هاب"
+              className="text-slate-400 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
+            >
+              <FontAwesomeIcon icon={faGithub} className="text-2xl" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/negar-shahhosini-803541417"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="لینکدین"
+              className="text-slate-400 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
+            >
+              <FontAwesomeIcon icon={faLinkedinIn} className="text-2xl" />
+            </a>
+
+                <a
+              href="mailto:negarshahitsme@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ایمیل"
+              className="text-slate-400 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
+            >
+              <FontAwesomeIcon icon={faEnvelope} className="text-2xl" />
+            </a>
           </div>
         </div>
 

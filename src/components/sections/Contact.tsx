@@ -1,24 +1,32 @@
 'use client'
 
+
+
 import * as React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faCircleCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Button } from '@/components/ui/Button'
 
+
+
+// 👇 این رو با فرم‌آی‌دی واقعی خودت از Formspree عوض کن
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xpqgrjpd'
+
 type FormState = { name: string; email: string; message: string }
 type Errors = Partial<Record<keyof FormState, string>>
+// وضعیت ارسال: بیکار، در حال ارسال، موفق، خطا
+type Status = 'idle' | 'submitting' | 'success' | 'error'
 
-// کلاس مشترک اینپوت‌ها — یک‌جا تعریف تا همه یک شکل باشن.
 const inputClass =
   'w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white'
 
 export function Contact() {
   const [form, setForm] = React.useState<FormState>({ name: '', email: '', message: '' })
   const [errors, setErrors] = React.useState<Errors>({})
-  const [sent, setSent] = React.useState(false)
+  const [status, setStatus] = React.useState<Status>('idle')
 
   // اعتبارسنجی ساده‌ی سمت کلاینت
   function validate(): boolean {
@@ -31,20 +39,32 @@ export function Contact() {
     return Object.keys(next).length === 0
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!validate()) return
 
-    // 👇 فعلاً بک‌اند نداریم؛ کاربر رو به اپ ایمیلش می‌بریم.
-    // بعداً این بلوک رو با fetch به یه API route یا سرویسی مثل Formspree عوض کن.
-    const subject = encodeURIComponent(`پیام از ${form.name}`)
-    const body = encodeURIComponent(`${form.message}\n\nایمیل تماس: ${form.email}`)
-    window.location.href = `mailto:you@example.com?subject=${subject}&body=${body}`
+    setStatus('submitting') // دکمه قفل می‌شه و اسپینر نشون داده می‌شه
 
-    setSent(true)
+    try {
+      // پیام رو به Formspree می‌فرستیم؛ اون برامون ایمیلش می‌کنه.
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(form),
+      })
+
+      if (res.ok) {
+        setStatus('success')
+        setForm({ name: '', email: '', message: '' }) // فرم رو خالی کن
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      // مثلاً وقتی اینترنت قطعه
+      setStatus('error')
+    }
   }
 
-  // هندلر مشترک برای آپدیت state و پاک‌کردن ارورِ همون فیلد
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
@@ -62,13 +82,13 @@ export function Contact() {
         />
 
         <div className="mx-auto mt-12 max-w-xl">
-          {sent ? (
+          {status === 'success' ? (
             // پیام موفقیت بعد از ارسال
             <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center dark:border-emerald-500/30 dark:bg-emerald-500/10">
               <FontAwesomeIcon icon={faCircleCheck} className="text-3xl text-emerald-600 dark:text-emerald-400" />
-              <p className="mt-3 font-bold text-slate-900 dark:text-white">پیامت آماده‌ی ارساله!</p>
+              <p className="mt-3 font-bold text-slate-900 dark:text-white">پیامت با موفقیت ارسال شد!</p>
               <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                اپ ایمیلت باید باز شده باشه. اگه نه، مستقیم به you@example.com ایمیل بزن.
+                ممنون که پیام دادی، در اولین فرصت جوابت رو می‌دم.
               </p>
             </div>
           ) : (
@@ -78,7 +98,15 @@ export function Contact() {
                 <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
                   نام
                 </label>
-                <input id="name" name="name" value={form.name} onChange={handleChange} placeholder="نام شما" className={inputClass} />
+                <input
+                  id="name"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="نام شما"
+                  disabled={status === 'submitting'}
+                  className={inputClass}
+                />
                 {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
               </div>
 
@@ -91,10 +119,11 @@ export function Contact() {
                   id="email"
                   name="email"
                   type="email"
-                  dir="ltr" // ایمیل لاتینه؛ چپ‌چین خواناتره
+                  dir="ltr"
                   value={form.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
+                  disabled={status === 'submitting'}
                   className={`${inputClass} text-left`}
                 />
                 {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
@@ -112,14 +141,32 @@ export function Contact() {
                   value={form.message}
                   onChange={handleChange}
                   placeholder="چی توی ذهنته؟"
+                  disabled={status === 'submitting'}
                   className={`${inputClass} resize-none`}
                 />
                 {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message}</p>}
               </div>
 
-              <Button type="submit" className="w-full">
-                <FontAwesomeIcon icon={faPaperPlane} className="text-[14px]" />
-                ارسال پیام
+              {/* خطای کلی ارسال */}
+              {status === 'error' && (
+                <p className="text-sm text-red-500">
+                  یه مشکلی پیش اومد. لطفاً دوباره امتحان کن یا مستقیم ایمیل بزن.
+                </p>
+              )}
+
+              <Button type="submit" disabled={status === 'submitting'} className="w-full">
+                {status === 'submitting' ? (
+                  <>
+                    {/* آیکون چرخان موقع ارسال */}
+                    <FontAwesomeIcon icon={faSpinner} className="animate-spin text-[14px]" />
+                    در حال ارسال…
+                  </>
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faPaperPlane} className="text-[14px]" />
+                    ارسال پیام
+                  </>
+                )}
               </Button>
             </form>
           )}

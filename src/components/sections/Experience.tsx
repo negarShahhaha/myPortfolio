@@ -4,7 +4,7 @@ import { faBriefcase, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { TIMELINE } from '@/data/experience'
-
+import {Reveal} from '@/components/ui/Reveal'
 export function Experience() {
   return (
     <section id="experience" className="bg-slate-50/70 py-20 sm:py-28 dark:bg-slate-900/30">
@@ -18,6 +18,8 @@ export function Experience() {
         {/* خط زمانی عمودی — چون RTL هستیم، خط سمت راست قرار می‌گیره */}
         <div className="relative mt-12 space-y-8 border-r-2 border-slate-200 pr-6 dark:border-slate-800">
           {TIMELINE.map((item, index) => (
+           <Reveal key={index} delay={index * 0.1}>
+
             <div key={index} className="relative">
               {/* نقطه‌ی روی خط زمانی */}
               <span className="absolute -right-[31px] top-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-600 text-[10px] text-white ring-4 ring-slate-50 dark:ring-slate-950">
@@ -37,6 +39,7 @@ export function Experience() {
                 </p>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </Container>

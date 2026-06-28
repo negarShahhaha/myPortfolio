@@ -6,6 +6,9 @@ import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { PROJECTS } from '@/data/projects'
 
+
+import {Reveal} from '@/components/ui/Reveal'
+
 export function Projects() {
   return (
     <section id="projects" className="py-20 sm:py-28">
@@ -17,7 +20,9 @@ export function Projects() {
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PROJECTS.map((project) => (
+          {PROJECTS.map((project, index) => (
+             <Reveal key={project.title} delay={index * 0.1}>
+            
             <article
               key={project.title}
               className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/40 dark:hover:border-emerald-500/40"
@@ -43,6 +48,7 @@ export function Projects() {
                     >
                       {tag}
                     </span>
+                 
                   ))}
                 </div>
 
@@ -73,6 +79,7 @@ export function Projects() {
                 </div>
               </div>
             </article>
+            </Reveal>
           ))}
         </div>
       </Container>

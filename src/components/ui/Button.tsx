@@ -1,4 +1,3 @@
-
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
@@ -7,11 +6,13 @@ type Variant = 'primary' | 'secondary'
 type ButtonProps = {
   children: React.ReactNode
   href?: string
-  external?: boolean // لینک خارجی (تب جدید) یا داخلی
+  external?: boolean
   variant?: Variant
   type?: 'button' | 'submit'
   onClick?: () => void
+  disabled?: boolean // 👈 جدید
   className?: string
+  download?: boolean
 }
 
 const base =
@@ -23,10 +24,6 @@ const variants: Record<Variant, string> = {
     'border border-slate-300 text-slate-700 hover:border-emerald-500 hover:text-emerald-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-emerald-500 dark:hover:text-emerald-400',
 }
 
-/**
- * دکمه‌ی همه‌کاره: با href تبدیل به لینک می‌شه (داخلی یا خارجی)،
- * بدون href یک <button> معمولیه. این‌طوری همه‌جا یک ظاهر داریم.
- */
 export function Button({
   children,
   href,
@@ -34,11 +31,29 @@ export function Button({
   variant = 'primary',
   type = 'button',
   onClick,
+ 
+  disabled = false, // 👈 جدید
   className,
+ download = false
 }: ButtonProps) {
-  const classes = cn(base, variants[variant], className)
+  // وقتی disabled باشه، کم‌رنگ و غیرقابل‌کلیک می‌شه
+  const classes = cn(
+    base,
+    variants[variant],
+    disabled && 'cursor-not-allowed opacity-60 hover:bg-emerald-600 hover:shadow-sm',
+    className,
+  )
 
-  if (href) {
+  // حالت لینک — disabled روی <a>/<Link> معنی نداره، پس نادیده‌اش می‌گیریم
+if (href) {
+    // اگه download باشه، از تگ <a> ساده استفاده می‌کنیم (next/link دانلود رو هندل نمی‌کنه)
+    if (download) {
+      return (
+        <a href={href} download className={classes}>
+          {children}
+        </a>
+      )
+    }
     return external ? (
       <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
         {children}
@@ -51,7 +66,7 @@ export function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes}>
       {children}
     </button>
   )

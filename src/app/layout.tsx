@@ -57,7 +57,7 @@ export default function RootLayout({
       <body
         className={`
           ${shabnam.variable} font-sans antialiased
-          bg-white text-slate-800
+           bg-slate-50 text-slate-800
           dark:bg-slate-950 dark:text-slate-200
           selection:bg-emerald-500/20
         `}

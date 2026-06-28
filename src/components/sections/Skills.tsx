@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { SKILL_CATEGORIES } from '@/data/skills'
-
+import {Reveal} from '@/components/ui/Reveal'
 export function Skills() {
   return (
     // پس‌زمینه‌ی کمی متفاوت تا این سکشن از بقیه جدا دیده بشه
@@ -16,7 +16,8 @@ export function Skills() {
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {SKILL_CATEGORIES.map((category) => (
+         {SKILL_CATEGORIES.map((category, index) => (
+           <Reveal key={category.title} delay={index * 0.1}>
             <div
               key={category.title}
               className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/40"
@@ -41,6 +42,7 @@ export function Skills() {
                 ))}
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </Container>
