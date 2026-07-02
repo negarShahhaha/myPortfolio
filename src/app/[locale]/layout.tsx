@@ -61,9 +61,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
-      <body
-        className={`${shabnam.variable} font-sans antialiased bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 selection:bg-emerald-500/20`}
-      >
+<body
+  className={`${shabnam.variable} font-sans antialiased bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-200 selection:bg-emerald-500/20 bg-grid`}
+>
         <NextIntlClientProvider>
           <ThemeProvider>
             <div className="flex min-h-dvh flex-col">

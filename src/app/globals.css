@@ -40,3 +40,21 @@ body {
   overflow: visible;
   vertical-align: -0.125em;
 }
+
+/* ===== پس‌زمینه‌ی گرید خطی ===== */
+
+.bg-grid {
+  /* دو تا گرادیانت خطی: یکی خطوط عمودی، یکی افقی */
+  background-image:
+    linear-gradient(to right, rgb(148 163 184 / 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(148 163 184 / 0.12) 1px, transparent 1px);
+  /* اندازه‌ی هر خونه‌ی گرید */
+  background-size: 56px 56px;
+}
+
+/* توی حالت شب، خطوط کم‌رنگ‌تر و ملایم‌تر */
+.dark .bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(148 163 184 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(148 163 184 / 0.07) 1px, transparent 1px);
+}
