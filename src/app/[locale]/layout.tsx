@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 
@@ -11,15 +12,21 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://myportfolio-2xn.pages.dev'),
-  title: {
-    default: 'نگار شاه حسینی | فرانت‌اند دولوپر',
-    template: '%s | نگار شاه حسینی',
-  },
-  description:
-    'پورتفولیوی شخصی نگار شاه حسینی؛ دانش‌آموخته‌ی مدیریت بازرگانی و توسعه‌دهنده‌ی فرانت‌اند.',
-  robots: { index: true, follow: true },
+// متادیتای داینامیک — عنوان تب و توضیحات بر اساس زبان عوض می‌شن
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'common' })
+
+  return {
+    metadataBase: new URL('https://myportfolio-2xn.pages.dev'),
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    robots: { index: true, follow: true },
+  }
 }
 
 export const viewport: Viewport = {
@@ -29,7 +36,7 @@ export const viewport: Viewport = {
   ],
 }
 
-// این تابع باعث می‌شه Next هر دو زبان رو از قبل بسازه (fa و en)
+// هر دو زبان (fa و en) رو از قبل بساز
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }

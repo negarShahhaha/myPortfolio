@@ -1,14 +1,19 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+
+
+import { useTranslations, useLocale } from 'next-intl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { Container } from '@/components/ui/Container'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { SKILL_CATEGORIES } from '@/data/skills'
 
+
+
 export function Skills() {
   const t = useTranslations('skills')
+  const locale = useLocale() as 'fa' | 'en'
 
   return (
     <section id="skills" className="bg-slate-50/70 py-20 sm:py-28 dark:bg-slate-900/30">
@@ -36,14 +41,11 @@ export function Skills() {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300"
-                  >
-                    {skill}
-                  </span>
-                ))}
+         {category.skills.map((skill) => (
+  <span key={skill.en} className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+    {skill[locale]}
+  </span>
+))}
               </div>
             </div>
           ))}

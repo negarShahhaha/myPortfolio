@@ -73,7 +73,9 @@
     "rights": "All rights reserved.",
     "builtWith": "Built with Next.js & love"
   },
-  "common": {
-    "fullName": "Negar Shahhosseini"
+"common": {
+    "fullName": "Negar Shahhosseini",
+    "metaTitle": "Negar Shahhosseini | Front-end Developer",
+    "metaDescription": "Personal portfolio of Negar Shahhosseini; business management graduate and front-end developer."
   }
 }
