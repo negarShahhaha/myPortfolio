@@ -1,9 +1,12 @@
-// next.config.ts
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
+
+// پلاگین next-intl رو به فایل request.ts وصل می‌کنیم
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const nextConfig: NextConfig = {
-  // اجازه‌ی دسترسی به منابع dev از این هاست (چون از روی IP شبکه بازش می‌کنی)
   allowedDevOrigins: ['10.77.201.72'],
 }
 
-export default nextConfig
+// کانفیگ رو با پلاگین wrap می‌کنیم
+export default withNextIntl(nextConfig)

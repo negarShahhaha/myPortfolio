@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 
@@ -9,23 +10,26 @@ import { Container } from '@/components/ui/Container'
 import { ThemeToggle } from './ThemeToggle'
 import { cn } from '@/lib/utils'
 
-// لینک‌های ناوبری یک‌جا تعریف شدن تا اضافه/کم کردنشون راحت باشه.
-const NAV_LINKS = [
-  { href: '#about', label: 'درباره من' },
-  { href: '#skills', label: 'مهارت‌ها' },
-  { href: '#projects', label: 'پروژه‌ها' },
-  { href: '#experience', label: 'تجربه و تحصیلات' },
-  { href: '#contact', label: 'تماس' },
-] as const
+import { LanguageToggle } from './LanguageToggle'
 
 export function Navbar() {
-  const [open, setOpen] = React.useState(false)        // وضعیت منوی موبایل
-  const [scrolled, setScrolled] = React.useState(false) // آیا کاربر اسکرول کرده؟
+  const t = useTranslations('nav') 
+  const [open, setOpen] = React.useState(false)       
+  const [scrolled, setScrolled] = React.useState(false) 
+const tc = useTranslations('common')
 
-  // وقتی کمی اسکرول شد، هدر سایه و پس‌زمینه‌ی بلور بگیره.
+  const NAV_LINKS = [
+    { href: '#about', label: t('about') },
+    { href: '#skills', label: t('skills') },
+    { href: '#projects', label: t('projects') },
+    { href: '#experience', label: t('experience') },
+    { href: '#contact', label: t('contact') },
+  ]
+
+  
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll() // یک‌بار اولش هم چک کن
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -41,15 +45,14 @@ export function Navbar() {
     >
       <Container>
         <nav className="flex h-16 items-center justify-between gap-4">
-          {/* لوگو / اسم */}
-          <Link href="#" className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-sm font-bold text-white">
-             L
-            </span>
-            <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white">
-             نگار شاه حسینی
-            </span>
-          </Link>
+       <Link href="#" className="flex items-center gap-2">
+  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-sm font-bold text-white">
+    {tc('fullName').charAt(0)}
+  </span>
+  <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white">
+    {tc('fullName')}
+  </span>
+</Link>
 
           {/* لینک‌های دسکتاپ */}
           <ul className="hidden items-center gap-1 md:flex">
@@ -68,8 +71,10 @@ export function Navbar() {
           </ul>
 
           {/* تاگل تم + همبرگر (موبایل) */}
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
+      <div className="flex items-center gap-2">
+  <LanguageToggle />
+  <ThemeToggle />
+  
             <button
               type="button"
               onClick={() => setOpen((prev) => !prev)}

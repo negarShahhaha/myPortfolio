@@ -1,0 +1,79 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience & Education",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Open to new projects & collaborations",
+    "greeting": "Hi, I'm",
+    "name": "Negar Shahhosseini",
+    "suffix": "",
+    "description": "Business management graduate and front-end developer — where business thinking meets clean code, especially in e-commerce and digital products.",
+    "viewProjects": "View Projects",
+    "contactMe": "Contact Me",
+    "downloadResume": "Download Resume"
+  },
+  "about": {
+    "eyebrow": "About Me",
+    "title": "Between business and code",
+    "description": "My path started with business management, but my love for building things led me into front-end development. Now I keep both together: I understand the product, and I can build it.",
+    "card1Title": "Business background",
+    "card1Text": "I studied business management and learned to see products through the lens of market, users, and profitability.",
+    "card2Title": "Technical skills",
+    "card2Text": "I build interfaces with React and Next.js that are fast, clean, and reliable.",
+    "card3Title": "What sets me apart",
+    "card3Text": "When a developer also speaks the language of business, technical decisions get smarter."
+  },
+"skills": {
+    "eyebrow": "Skills",
+    "title": "What I work with",
+    "description": "A mix of technical and business skills — this variety helps me see the product more completely.",
+    "frontend": "Frontend",
+    "business": "Business & Product",
+    "tools": "Tools",
+    "soft": "Soft Skills"
+  },
+  "projects": {
+    "eyebrow": "Projects",
+    "title": "Things I've built",
+    "description": "A few of the projects I've worked on. Each one was a step toward learning and getting better.",
+    "github": "GitHub",
+    "demo": "Live Demo"
+  },
+  "experience": {
+    "eyebrow": "My journey",
+    "title": "Experience & Education",
+    "description": "The key milestones that shaped me so far."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk",
+    "description": "For collaborations, projects, or even a simple hello — I'd love to hear from you.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "messageLabel": "Message",
+    "messagePlaceholder": "What's on your mind?",
+    "send": "Send Message",
+    "sending": "Sending…",
+    "successTitle": "Your message was sent!",
+    "successText": "Thanks for reaching out, I'll get back to you soon.",
+    "errorText": "Something went wrong. Please try again or email me directly.",
+    "errName": "Please enter your name.",
+    "errEmailRequired": "Email is required.",
+    "errEmailInvalid": "Invalid email format.",
+    "errMessage": "Write a short message 🙂"
+  }
+  ,
+  "footer": {
+    "role": "Front-end Developer · Passionate about business & digital products",
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js & love"
+  },
+  "common": {
+    "fullName": "Negar Shahhosseini"
+  }
+}

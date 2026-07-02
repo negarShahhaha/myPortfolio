@@ -1,34 +1,37 @@
-
 import {
   faCode,
   faChartLine,
   faScrewdriverWrench,
   faUsersGear,
 } from '@fortawesome/free-solid-svg-icons'
-import type { SkillCategory } from '@/types'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
-/**
- * مهارت‌ها در چهار دسته — فنی، کسب‌وکار، ابزار و مهارت‌های نرم.
- * هرکدوم رو که خواستی کم/زیاد کن؛ کامپوننت Skills خودش روشون map می‌زنه.
- */
+// حالا به‌جای عنوان ثابت، یه titleKey داریم که به فایل ترجمه اشاره می‌کنه
+export type SkillCategory = {
+  titleKey: 'frontend' | 'business' | 'tools' | 'soft'
+  icon: IconDefinition
+  skills: string[]
+}
+
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    title: 'فرانت‌اند',
+    titleKey: 'frontend',
     icon: faCode,
     skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML & CSS', 'Git'],
   },
   {
-    title: 'کسب‌وکار و محصول',
+    titleKey: 'business',
     icon: faChartLine,
+    // اسم مهارت‌ها رو هم می‌تونی بعداً دوزبانه کنی؛ فعلاً فارسی می‌مونن
     skills: ['تحلیل بازار', 'استراتژی محصول', 'دیجیتال مارکتینگ', 'تحلیل داده', 'مدل کسب‌وکار'],
   },
   {
-    title: 'ابزارها',
+    titleKey: 'tools',
     icon: faScrewdriverWrench,
     skills: ['Figma', 'VS Code', 'Vercel', 'Notion', 'Google Analytics'],
   },
   {
-    title: 'مهارت‌های نرم',
+    titleKey: 'soft',
     icon: faUsersGear,
     skills: ['کار تیمی', 'حل مسئله', 'ارتباط مؤثر', 'مدیریت زمان', 'یادگیری سریع'],
   },
